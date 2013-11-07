@@ -21,6 +21,8 @@
     "url": "https://github.com/turingou/mails/issues"
   },
   "dependencies": {
+    "less": "*",
+    "juice": "*",
     "jade": "*",
     "swig": "*"
   }
