@@ -1,0 +1,27 @@
+{
+  "name": "mails",
+  "version": "0.0.1",
+  "description": "mails templates based on Node.js",
+  "main": "index.js",
+  "author": "turing",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turingou/mails.git"
+  },
+  "keywords": [
+    "mail",
+    "mails",
+    "email"
+  ],
+  "bugs": {
+    "url": "https://github.com/turingou/mails/issues"
+  },
+  "dependencies": {
+    "jade": "*",
+    "swig": "*"
+  }
+}
