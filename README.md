@@ -1,18 +1,44 @@
 ## mails ![npm](https://badge.fury.io/js/mails.png)
 
-mails templates based on Node.js by [turing](https://npmjs.org/~turing) 
+mails templates based on Node.js, width
 
 ### Installation
 ````
 $ npm install mails
-// or install globally
-$ sudo npm install mails -g
 ````
 
 ### Example
 ````javascript
 var mails = require('mails');
+
+// use built in templates
+// mails supports ink template(responsive) now!
+mail.render('basic',{
+    name: 'mySite',
+    banner: 'http://mysite.com/banner.jpg'
+}, function(err,html){
+    if (!err) {
+        console.log(html);
+    } else {
+        console.log(err);
+    }
+});
 ````
+
+### Templates as NPM modules
+you can also push templates as NPM modules, like this:
+````javascript
+var mails = require('mails');
+
+// using templates named `single` under module `mails-mailmao`
+mails.render('mails-mailmao/single', {
+    name: 'mySite',
+    banner: 'http://mysite.com/banner.jpg'
+}, function(err, html){
+    // do sth.
+});
+````
+please feel free to publish your templates to NPM.
 
 ### API
 check this file: `index.js`
