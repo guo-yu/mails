@@ -1,6 +1,8 @@
 ## mails ![npm](https://badge.fury.io/js/mails.png)
 
-mails templates based on Node.js, width
+mails templates based on Node.js, with responsive templates built in.
+
+mails supports [ink](http://zurb.com/ink) responsive email template now!
 
 ### Installation
 ````
@@ -12,7 +14,6 @@ $ npm install mails
 var mails = require('mails');
 
 // use built in templates
-// mails supports ink template(responsive) now!
 mail.render('basic',{
     name: 'mySite',
     banner: 'http://mysite.com/banner.jpg'
