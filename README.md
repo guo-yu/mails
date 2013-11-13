@@ -1,4 +1,4 @@
-## mails ![npm](https://badge.fury.io/js/mails.png)
+## ![logo](http://ww2.sinaimg.cn/large/61ff0de3gw1eajmy0wdikj2014014wea.jpg) mails ![npm](https://badge.fury.io/js/mails.png)
 
 send beautiful emails made easy, with responsive templates built in.
 
@@ -25,6 +25,32 @@ mail.render('basic', {
     }
 });
 ````
+### Built-in themes
+mails supports several kinds of themes, they are:
+
+- inks theme:
+    - basic
+    - hero
+    - newsletter
+    - sidebar
+    - sidebar-hero
+- mails theme:
+    - one
+
+#### build-in theme useage:
+````javascript
+var mails = require('mails');
+
+mails.render('basic', {
+    name: 'mySite',
+    banner: 'http://mysite.com/banner.jpg'
+}, function(err, html){
+    // do sth.
+});
+````
+#### build-in theme variables:
+take a look:
+(screenshots coming soon...)
 
 ### Templates as NPM modules
 you can also push templates as NPM modules, like this:

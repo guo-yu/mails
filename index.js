@@ -1,35 +1,60 @@
 var fs = require('fs'),
     path = require('path'),
-    juice = require('juice').juiceContent,
-    swig = require('swig');
+    swig = require('swig'),
+    juice = require('juice').juiceContent;
+
+exports.engines = function(name, func) {
+    // return func: (file, params);
+    var engines = {
+        jade: func.renderFile,
+        swig: func.compileFile
+    }
+    if (engines[name]) {
+        return engines[name];
+    } else {
+        return engines.jade;
+    }
+}
 
 exports.render = function(tpl, params, callback) {
-    var template = path.join(__dirname, 'templates', tpl + '.jade');
-    if (fs.existsSync(template)) {
-        // local theme
-        juice(swig.compileFile(template)(params),{
-            url: 'file://' + template
+    var localTemplate = path.join(__dirname, 'templates', tpl + '.html');
+    if (fs.existsSync(localTemplate)) {
+        // local themes
+        juice(swig.compileFile(localTemplate)(params), {
+            url: 'file://' + localTemplate
         }, callback);
     } else {
-        // try fetch local module
-        if (tpl.indexOf('/') > -1) {
-            tpl = { name: tpl.substr(0,tpl.indexOf('/')), file: tpl.substr(tpl.indexOf('/') + 1) }
-        } else {
-            tpl = { name: tpl }
-        }
-        var moduleDir = path.resolve(__dirname, '../node_modules/', tpl.name);
+        // try fetch local themes module
+        var template = {
+            name: tpl.indexOf('/') > -1 ? tpl.substr(0, tpl.indexOf('/')) : tpl,
+            file: tpl.indexOf('/') > -1 ? tpl.substr(tpl.indexOf('/') + 1) : null
+        };
+        var moduleDir = path.resolve(__dirname, '../node_modules/', template.name);
         if (fs.existsSync(moduleDir)) {
-            // theme from local modules
+            // themes as local modules
             try {
                 var pkg = require(path.join(moduleDir, '/package.json'));
                 if (pkg['view engine']) {
-                    // 有没有比较好的方法拿到这个view engine? 在mails模块不依赖它的前提下
-                    // juice(pkg['view engine'](template, params),{
-                    //     url: 'file://' + template
-                    // }, callback);
-                    // callback(null, engines[pkg.mails.engine](path.join(moduleDir, pkg.mails.template), params));
+                    try {
+                        var engine = require(pkg['view engine']);
+                        if (template.file) {
+                            var file = path.join(moduleDir, template.file);
+                            if (fs.existsSync(file)) {
+                                juice(engines(pkg['view engine'], engine)(file, params), {
+                                    url: 'file://' + file
+                                }, callback);
+                            } else {
+                                callback(new Error('selected file not found'))
+                            }
+                        } else {
+                            callback(new Error('which template your want to create mail ?'))
+                        }
+                    } catch (err) {
+                        console.log(err);
+                        callback(new Error('view engine not found'));
+                    }
                 } else {
-                    callback(new Error('template not existed'));
+                    callback(new Error('template engine not select'));
                 }
             } catch (err) {
                 callback(new Error('template not existed'));
@@ -38,4 +63,4 @@ exports.render = function(tpl, params, callback) {
             callback(new Error('template not existed'));
         }
     }
-}
+};
