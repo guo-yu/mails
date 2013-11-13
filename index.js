@@ -8,7 +8,7 @@ exports.engines = function(name, func) {
     var engines = {
         jade: func.renderFile,
         swig: func.compileFile
-    }
+    };
     if (engines[name]) {
         return engines[name];
     } else {

@@ -1,14 +1,15 @@
 ## ![logo](http://ww2.sinaimg.cn/large/61ff0de3gw1eajmy0wdikj2014014wea.jpg) mails ![npm](https://badge.fury.io/js/mails.png)
 
-mails 让你发送邮件变得更加简单，优雅。你可以使用 mails 内建的标准模板来发送邮件，也可以快速发布自己的邮件主题。mails 内建的标准邮件模板由 [ink](http://zurb.com/ink) 改造而来，二次开发简易，并且对各个终端的兼容表现优秀。
+send beautiful emails made easy, with responsive templates built in.
 
-### 如何安装
+mails supports [ink](http://zurb.com/ink) responsive email template now!
+
+### Installation
 ````
 $ npm install mails
 ````
 
-### 范例代码
-最快上手使用 mails，这里，我们选用名为 basic 的邮件模板渲染邮件：
+### Example
 ````javascript
 var mails = require('mails');
 
@@ -24,26 +25,35 @@ mail.render('basic', {
     }
 });
 ````
-### 内建邮件主题
-mails 内建邮件主题包括以下几种:
+### Built-in themes
+mails supports several kinds of themes, they are:
 
-- ink 主题:
+- ink themes:
     - basic
     - hero
     - newsletter
     - sidebar
     - sidebar-hero
-- mails 主题:
+- mails theme:
     - one
 
-#### 内建邮件主题变量列表
+#### built-in theme useage:
+````javascript
+var mails = require('mails');
+
+mails.render('basic', {
+    name: 'mySite',
+    banner: 'http://mysite.com/banner.jpg'
+}, function(err, html){
+    // do sth.
+});
+````
+#### built-in theme variables:
 take a look:
 (screenshots coming soon...)
 
-### 使用 NPM 模块作为邮件主题
-你可以将 mails 提供的标准邮件主题进行简单的二次开发，然后发布到 npm 座位您的邮件主题，并且让他人受益。
-
-在这个例子中，我们引入了一个叫做 `mails-mailmao` 的模块，并使用其中的 `single.jade` 主题。
+### Templates as NPM modules
+you can also push templates as NPM modules, like this:
 ````javascript
 var mails = require('mails');
 
@@ -55,16 +65,12 @@ mails.render('mails-mailmao/single', {
     // do sth.
 });
 ````
-#### 如何进行主题的二次开发
-待续...
-
-#### 如何发布主题到 NPM
-待续...
+please feel free to publish your templates to NPM.
 
 ### API
-查看这个文件: `index.js`
+check this file: `index.js`
 
-### 贡献我的代码
+### Contributing
 - Fork this repo
 - Clone your repo
 - Install dependencies
