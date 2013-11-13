@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block css %}
-<link rel="stylesheet" href="../styles/basic.css" />
+<link rel="stylesheet" href="../styles/mails.css" />
 {% endblock %}
 
 {% block content %}
@@ -19,10 +19,10 @@
                   <tr>
                   
                     <td class="six sub-columns">
-                      <img src="http://placehold.it/200x50">
+                      <img src="{{site.logo}}" title="{{site.name}}" alt="{{site.name}}">
                     </td>
                     <td class="six sub-columns last" align="right" style="text-align:right; vertical-align:middle;">
-                      <span class="template-label">HERO</span>
+                      <span class="template-label">{{site.desc}}</span>
                     </td>
                     <td class="expander"></td>
                     
@@ -52,34 +52,15 @@
                 <tr>
                   <td>
 
-                    <h3>Hi, Elijah Baily</h3>
-                                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
-                                <img width="580" height="300" src="http://placehold.it/580x300">
+                    <h3 class="title">{{title}}</h3>
+                    <p class="lead desc">{{desc}}</p>
+                    <img width="580" height="300" src="{{banner}}">
 
                   </td>
                   <td class="expander"></td>
                 </tr>
               </table>
         
-            </td>
-          </tr>
-        </table>
-        
-        <table class="row callout">
-          <tr>
-            <td class="wrapper last">
-
-              <table class="twelve columns">
-                <tr>
-                  <td class="panel">
-
-                    <p>Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae. <a href="#">Click it! »</a></p>
-
-                  </td>
-                  <td class="expander"></td>
-                </tr>
-              </table>
-
             </td>
           </tr>
         </table>
@@ -92,8 +73,8 @@
                 <tr>
                   <td>
 
-                    <h3>Title Ipsum <small>This is a note.</small></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <h3>{{content.title}} <small>{{content.desc}}</small></h3>
+                    <p>{{content.main}}</p>
 
                   </td>
                   <td class="expander"></td>
@@ -113,11 +94,11 @@
                 <tr>
                   <td>
 
-                    <a class="button" href="#">
+                    <a class="button" href="{{content.link.href}}">
                       <table>
                         <tr>
                           <td>
-                            Click Me!
+                            {{content.link.text}}
                           </td>
                         </tr>
                       </table>
@@ -131,75 +112,6 @@
             </td>
           </tr>
         </table>
-        
-        
-        <table class="row footer">
-          <tr>
-            <td class="wrapper">
-                    
-              <table class="six columns">
-                <tr>
-                  <td class="left-text-pad">
-
-                    <h5>Connect With Us:</h5>
-
-                    <a class="tiny-button facebook" href="#">
-                      <table>
-                        <tr>
-                          <td>
-                            Facebook
-                          </td>
-                        </tr>
-                      </table>
-                    </a>
-
-                    <br>
-
-                    <a class="tiny-button twitter" href="#">
-                      <table>
-                        <tr>
-                          <td>
-                            Twitter
-                          </td>
-                        </tr>
-                      </table>
-                    </a>
-
-                    <br>
-
-                    <a class="tiny-button google-plus" href="#">
-                      <table>
-                        <tr>
-                          <td>
-                            Google +
-                          </td>
-                        </tr>
-                      </table>
-                    </a>
-
-                  </td>
-                  <td class="expander"></td>
-                </tr>
-              </table>
-
-            </td>
-            <td class="wrapper last">
-
-              <table class="six columns">
-                <tr>
-                  <td class="last right-text-pad">
-                    <h5>Contact Info:</h5>
-                    <p>Phone: 408.341.0600</p>
-                    <p>Email: <a href="mailto:hseldon@trantor.com">hseldon@trantor.com</a></p>
-                  </td>          
-                  <td class="expander"></td>
-                </tr>
-              </table>
-
-            </td>
-          </tr>
-        </table>
-        
         
         <table class="row">
           <tr>
@@ -209,7 +121,10 @@
                 <tr>
                   <td align="center">
                     <center>
-                      <p style="text-align:center;"><a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#"><unsubscribe>Unsubscribe</unsubscribe></a></p>
+                      <p style="text-align:center;">
+                        {% for key,value in footer %}
+                          <a href="{{value}}">{{key}}</a> 
+                        {% endfor %}
                     </center>
                   </td>
                   <td class="expander"></td>

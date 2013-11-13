@@ -75,3 +75,12 @@ table.columns .right-text-pad {
     padding-right: 10px !important;
   }
 }
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.desc {
+  font-size: 14px;
+}

@@ -28,7 +28,7 @@ mail.render('basic', {
 ### Built-in themes
 mails supports several kinds of themes, they are:
 
-- inks theme:
+- ink themes:
     - basic
     - hero
     - newsletter
@@ -37,7 +37,7 @@ mails supports several kinds of themes, they are:
 - mails theme:
     - one
 
-#### build-in theme useage:
+#### built-in theme useage:
 ````javascript
 var mails = require('mails');
 
@@ -48,7 +48,7 @@ mails.render('basic', {
     // do sth.
 });
 ````
-#### build-in theme variables:
+#### built-in theme variables:
 take a look:
 (screenshots coming soon...)
 
