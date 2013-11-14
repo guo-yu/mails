@@ -1,0 +1,144 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="../styles/mails.css" />
+<link rel="stylesheet" href="../styles/message.css" />
+{% endblock %}
+
+{% block content %}
+         
+  <table class="row header">
+    <tr>
+      <td class="center" align="center">
+        <center>
+  
+          <table class="container">
+            <tr>
+              <td class="wrapper last">
+    
+                <table class="twelve columns">
+                  <tr>
+                  
+                    <td class="six sub-columns">
+                      <img src="{{site.logo}}" title="{{site.name}}" alt="{{site.name}}">
+                    </td>
+                    <td class="six sub-columns last" align="right" style="text-align:right; vertical-align:middle;">
+                      <span class="template-label">{{site.desc}}</span>
+                    </td>
+                    <td class="expander"></td>
+                    
+                  </tr>
+                </table>
+    
+              </td>
+            </tr>
+          </table>
+
+        </center>
+      </td>
+    </tr>
+  </table> 
+  <br>
+  
+  <table class="container">
+    <tr>
+      <td>
+        
+        <!-- content start -->
+        <table class="row">
+          <tr>
+            <td class="wrapper last">
+        
+              <table class="twelve columns">
+                <tr>
+                  <td>
+
+                    <h3 class="title">{{title}}</h3>
+                    <p class="lead desc">{{desc}}</p>
+                    <img width="580" height="300" src="{{banner}}">
+
+                  </td>
+                  <td class="expander"></td>
+                </tr>
+              </table>
+        
+            </td>
+          </tr>
+        </table>
+        
+        <table class="row">
+          <tr>
+            <td class="wrapper last">
+
+              <table class="twelve columns">
+                <tr>
+                  <td>
+
+                    <h3>{{content.title}} <small>{{content.desc}}</small></h3>
+                    <p>{{content.main}}</p>
+
+                  </td>
+                  <td class="expander"></td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+        </table>
+        
+        
+        <table class="row">
+          <tr>
+            <td class="wrapper last">
+
+              <table class="three columns">
+                <tr>
+                  <td>
+
+                    <a class="button" href="{{content.link.href}}">
+                      <table>
+                        <tr>
+                          <td>
+                            {{content.link.text}}
+                          </td>
+                        </tr>
+                      </table>
+                    </a>
+
+                  </td>
+                  <td class="expander"></td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+        </table>
+        
+        <table class="row">
+          <tr>
+            <td class="wrapper last">
+    
+              <table class="twelve columns">
+                <tr>
+                  <td align="center">
+                    <center>
+                      <p style="text-align:center;">
+                        {% for key,value in footer %}
+                          <a href="{{value}}">{{key}}</a> 
+                        {% endfor %}
+                    </center>
+                  </td>
+                  <td class="expander"></td>
+                </tr>
+              </table>
+    
+            </td>
+          </tr>
+        </table>
+        
+        <!-- container end below -->
+      </td>
+    </tr>
+  </table> 
+
+{% endblock %}
