@@ -85,10 +85,8 @@ exports.render = function(tpl, params, callback) {
 };
 
 exports.output = function(file, html, callback) {
-    var filename = file.substr(file.lastIndexOf('/') + 1, file.lastIndexOf('.') - 1) + '.dest.html';
-    var filedest = path.reslove(file, './' + filename);
-    console.log(filename);
-    console.log(filedest);
+    var filename = file.substr(file.lastIndexOf('/') + 1, file.lastIndexOf('.') - file.lastIndexOf('/') - 1) + '.dest.html',
+        filedest = path.resolve(file, '../', filename);
     fs.writeFile(filedest, html, function(err) {
         callback(err, filedest);
     });
@@ -100,29 +98,31 @@ exports.watcher = function(dir, params) {
     });
     server.watch(function(file, event, stat, io) {
         if (params.engine && event !== 'removed') {
-            exports._render({
-                template: file,
-                data: params.data,
-                engine: {
-                    name: params.data.engine,
-                    _engine: params.engine
-                }
-            }, function(err, html) {
-                if (!err) {
-                    // compile and emit
-                    exports.output(file, html, function(err, dest) {
-                        if (!err) {
-                            io.sockets.on('connection', function(socket) {
-                                socket.emit('rendered', dest);
-                            });
-                        } else {
-                            consoler.error(err);
-                        }
-                    });
-                } else {
-                    consoler.error(err);
-                }
-            });
+            if (file.indexOf('dest') === -1) {
+                exports._render({
+                    template: file,
+                    data: params.data,
+                    engine: {
+                        name: params.data.engine,
+                        _engine: params.engine
+                    }
+                }, function(err, html) {
+                    if (!err) {
+                        // compile and emit
+                        exports.output(file, html, function(err, dest) {
+                            if (!err) {
+                                io.sockets.on('connection', function(socket) {
+                                    socket.emit('rendered', dest);
+                                });
+                            } else {
+                                consoler.error(err);
+                            }
+                        });
+                    } else {
+                        consoler.error(err);
+                    }
+                });
+            }
         }
     });
     server.run();
@@ -145,14 +145,17 @@ exports.cli = function() {
                         var data = JSON.parse(file);
                         if (data.engine) {
                             try {
-                                var engine = require(path.join(dir, './node_modules/', data.engine));
-                                console.log(engine);
-                                self.watcher = exports.watcher(dir,{
+                                // var engine = require(path.join(dir, './node_modules/', data.engine));
+                                var engine = require(data.engine);
+                                // console.log(engine);
+                                self.watcher = exports.watcher(dir, {
                                     engine: engine,
                                     data: data
                                 });
+                                consoler.success('Mails is watching: http://localhost:3001');
                             } catch (err) {
                                 consoler.error('view engine required');
+                                consoler.error(err);
                                 return false;
                             }
                         } else {
@@ -164,7 +167,7 @@ exports.cli = function() {
                         return false;
                     }
                 } else {
-                    consoler.log('404','configs not found');
+                    consoler.log('404', 'configs not found');
                     return false;
                 }
             })
