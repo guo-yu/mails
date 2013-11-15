@@ -4,20 +4,24 @@ var fs = require('fs'),
     juice = require('juice').juiceContent,
     optimist = require('optimist'),
     argv = optimist.argv,
-    Tao = require('tao');
+    Tao = require('tao'),
+    consoler = require('consoler');
 
 // engines map
-exports._render = function(params) {
-    // return func: (file, params);
-    var engines = {
-        jade: func.renderFile,
-        swig: func.compileFile
-    };
-    if (engines[name]) {
-        return engines[name];
+exports._render = function(params, callback) {
+    var engine = params.engine,
+        html;
+    if (engine.name === 'jade') {
+        html = engine._engine.renderFile(params.template, params.data);
+    } else if (engine.name === 'swig') {
+        html = engine._engine.compileFile(params.template)(params.data);
     } else {
-        return engines.jade;
+        callback(new Error('template engine not supported'))
+        return false;
     }
+    juice(html, {
+        url: 'file://' + params.template
+    }, callback);
 }
 
 // render mails html
@@ -25,8 +29,13 @@ exports.render = function(tpl, params, callback) {
     var localTemplate = path.join(__dirname, 'templates', tpl + '.html');
     if (fs.existsSync(localTemplate)) {
         // local themes
-        juice(swig.compileFile(localTemplate)(params), {
-            url: 'file://' + localTemplate
+        exports._render({
+            template: localTemplate,
+            data: params,
+            engine: {
+                name: 'swig',
+                _engine: swig
+            }
         }, callback);
     } else {
         // try fetch local themes module
@@ -45,14 +54,19 @@ exports.render = function(tpl, params, callback) {
                         if (template.file) {
                             var file = path.join(moduleDir, template.file);
                             if (fs.existsSync(file)) {
-                                juice(engines(pkg['view engine'], engine)(file, params), {
-                                    url: 'file://' + file
+                                exports._render({
+                                    template: file,
+                                    data: params,
+                                    engine: {
+                                        name: pkg['view engine'],
+                                        _engine: engine
+                                    }
                                 }, callback);
                             } else {
-                                callback(new Error('selected file not found'))
+                                callback(new Error('selected file not found'));
                             }
                         } else {
-                            callback(new Error('which template your want to create mail ?'))
+                            callback(new Error('which template your want to create mail ?'));
                         }
                     } catch (err) {
                         console.log(err);
@@ -75,10 +89,45 @@ exports.output = function(file, html, callback) {
     var filedest = path.reslove(file, './' + filename);
     console.log(filename);
     console.log(filedest);
-    fs.writeFile(filedest,html,function(err){
+    fs.writeFile(filedest, html, function(err) {
         callback(err, filedest);
     });
 };
+
+exports.watcher = function(dir, params) {
+    var server = new Tao({
+        dir: dir
+    });
+    server.watch(function(file, event, stat, io) {
+        if (params.engine && event !== 'removed') {
+            exports._render({
+                template: file,
+                data: params.data,
+                engine: {
+                    name: params.data.engine,
+                    _engine: params.engine
+                }
+            }, function(err, html) {
+                if (!err) {
+                    // compile and emit
+                    exports.output(file, html, function(err, dest) {
+                        if (!err) {
+                            io.sockets.on('connection', function(socket) {
+                                socket.emit('rendered', dest);
+                            });
+                        } else {
+                            consoler.error(err);
+                        }
+                    });
+                } else {
+                    consoler.error(err);
+                }
+            });
+        }
+    });
+    server.run();
+    return server;
+}
 
 // mails(1)
 exports.cli = function() {
@@ -87,18 +136,21 @@ exports.cli = function() {
         data = arguments[1],
         dir = process.cwd(),
         self = this;
+
     if (command == 'watch') {
-        var server = new Tao({ dir: dir });
         if (data) {
-            fs.readFile(path.reslove(dir, data), function(err, file) {
+            fs.readFile(path.resolve(dir, data.toString()), function(err, file) {
                 if (!err) {
                     try {
                         var data = JSON.parse(file);
                         if (data.engine) {
                             try {
                                 var engine = require(path.join(dir, './node_modules/', data.engine));
-                                self.engine = engine;
-                                self.data = data;
+                                console.log(engine);
+                                self.watcher = exports.watcher(dir,{
+                                    engine: engine,
+                                    data: data
+                                });
                             } catch (err) {
                                 consoler.error('view engine required');
                                 return false;
@@ -112,7 +164,7 @@ exports.cli = function() {
                         return false;
                     }
                 } else {
-                    consoler.error('configs required');
+                    consoler.log('404','configs not found');
                     return false;
                 }
             })
@@ -120,33 +172,7 @@ exports.cli = function() {
             consoler.error('configs required');
             return false;
         }
-        server.watch(function(file, event, stat, io) {
-            if (self.engine && event !== 'removed') {
-                exports._render({
-                    template: file,
-                    data: self.data,
-                    engine: {
-                        name: self.data.engine, 
-                        engine: self.engine
-                    }
-                }, function(err, html) {
-                    if (!err) {
-                        // compile and emit
-                        exports.output(file, html, function(err, dest){
-                            if (!err) {
-                                io.sockets.on('connection', function(socket) {
-                                    socket.emit('rendered', dest);
-                                });
-                            } else {
-                                consoler.error(err);
-                            }
-                        });
-                    } else {
-                        consoler.error(err);
-                    }
-                });
-            }
-        });
-        server.run();
+    } else {
+        return false;
     }
 }
