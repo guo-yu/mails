@@ -3,10 +3,13 @@ var fs = require('fs'),
     swig = require('swig'),
     juice = require('juice').juiceContent;
 
+// environments
+swig.setDefaults({ cache: false });
+
 // engines map
 exports._render = function(params, callback) {
     var engine = params.engine,
-        html;
+        html = '';
     if (engine.name === 'jade') {
         html = engine._engine.renderFile(params.template, params.data);
     } else if (engine.name === 'swig') {
