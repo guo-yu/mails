@@ -87,12 +87,14 @@ exports.render = function(tpl, params, callback) {
 exports.output = function(file, html, callback) {
     var filename = file.substr(file.lastIndexOf('/') + 1, file.lastIndexOf('.') - file.lastIndexOf('/') - 1) + '.dest.html',
         filedest = path.resolve(file, '../', filename);
+    console.log(filedest);
     fs.writeFile(filedest, html, function(err) {
         callback(err, filedest);
     });
 };
 
 exports.watcher = function(dir, params) {
+    var port = params.port ? params.port : 3001;
     var server = new Tao({
         dir: dir
     });
@@ -108,8 +110,10 @@ exports.watcher = function(dir, params) {
                     }
                 }, function(err, html) {
                     if (!err) {
+                        console.log(html);
                         // compile and emit
-                        exports.output(file, html, function(err, dest) {
+                        var socket = "<script src=\"http://localhost:" + (port + 1) + "/socket.io/socket.io.js\"></script><script>var socket = io.connect('http://localhost:" + (port + 1) + "');socket.on('rendered', function (data) {alert(data);});</script>";
+                        exports.output(file, html + socket, function(err, dest) {
                             if (!err) {
                                 io.sockets.on('connection', function(socket) {
                                     socket.emit('rendered', dest);
@@ -125,7 +129,7 @@ exports.watcher = function(dir, params) {
             }
         }
     });
-    server.run();
+    server.run(port);
     return server;
 }
 
@@ -145,14 +149,14 @@ exports.cli = function() {
                         var data = JSON.parse(file);
                         if (data.engine) {
                             try {
-                                // var engine = require(path.join(dir, './node_modules/', data.engine));
-                                var engine = require(data.engine);
-                                // console.log(engine);
+                                var engine = require(data.engine),
+                                    port = 3001;
                                 self.watcher = exports.watcher(dir, {
+                                    port: port,
                                     engine: engine,
                                     data: data
                                 });
-                                consoler.success('Mails is watching: http://localhost:3001');
+                                consoler.success('Mails is watching: http://localhost:' + port);
                             } catch (err) {
                                 consoler.error('view engine required');
                                 consoler.error(err);
