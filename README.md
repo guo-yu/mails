@@ -38,14 +38,13 @@ mail.render('basic', {
 });
 ````
 ### 内建邮件主题
-mails 内建邮件主题包括以下几种，各个邮件的变量列表请查阅 `temple`
+mails 内建邮件主题包括以下几种，各个邮件的变量列表请查阅 `templates/*.html` 各个模板文件：
 
-- 从 ink 迁移而来的主题：
-    - basic
-    - hero
-    - newsletter
-    - sidebar
-    - sidebar-hero
+- basic
+- hero
+- newsletter
+- sidebar
+- sidebar-hero
 
 ### 加载 NPM 模块作为主题
 你可以将 mails 提供的标准邮件主题进行简单的二次开发，然后发布到 npm 作为您的邮件主题，使他人获益。
@@ -61,23 +60,31 @@ mails.render('mails-flat/message', { ...... }, function(err, html){
 #### 如何进行主题的二次开发
 
 1. 首先，将 mails 作为全局模块安装：
+
 ````
 $ [sudo] npm install mails -g
 ````
+
 2. 建立新项目文件夹，初始化邮件主题：
+
 ````
 $ mkdir my-mails-theme && cd my-mails-theme
 $ mails init
 ````
+
 3. 编辑 `package.json`，这个文件定义了模板引擎的配置，也保存了调试所需要的变量，确保此文件中有正确的 `view engine` 字段：
+
 ````
 $ vi ./package.json
 $ { "view engine": "swig" }
 ````
+
 4. 使用 live reload 设计工具进行开发
+
 ````
 $ mails watch ./package.json 
 ````
+
 
 #### 如何发布主题到 NPM
 在使用 `npm publish` 发布到社区之前，确认以下几项：
