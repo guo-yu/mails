@@ -14,6 +14,7 @@ exports.socket = function(port, html) {
 }
 
 exports.serve = function(dir, params, callback) {
+
     // 初始化服务
     var server = new Tao({
         dir: dir,
@@ -123,14 +124,14 @@ exports.cli = function() {
             'git clone ' + sys.repository.url + ' .',
             'rm -rf .git',
             'rm -rf bin',
-            'rm index.js package.json README.md README.en.md LICENSE',
+            'rm index.js cli.js package.json README.md README.en.md LICENSE',
             'cp ./package.sample.json ./package.json',
             'rm package.sample.json',
             'cp ./README.sample.md ./README.md',
             'rm README.sample.md',
             'npm install'
         ]);
-        init.on('done',function(count){
+        init.on('done', function(count) {
             consoler.success('another mails theme created, enjoy!');
         });
         init.run();

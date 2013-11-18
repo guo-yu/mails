@@ -4,7 +4,9 @@ var fs = require('fs'),
     juice = require('juice').juiceContent;
 
 // environments
-swig.setDefaults({ cache: false });
+swig.setDefaults({
+    cache: false
+});
 
 // engines map
 exports._render = function(params, callback) {
