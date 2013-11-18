@@ -8,9 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bin": {
-    "mails": "./bin/cli"
-  },
+  "bin": "./bin/cli",
   "repository": {
     "type": "git",
     "url": "https://github.com/turingou/mails.git"
@@ -28,6 +26,7 @@
     "swig": "*",
     "optimist": "*",
     "consoler": "*",
-    "tao": "*"
+    "tao": "*",
+    "exeq": "*"
   }
 }

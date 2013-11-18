@@ -4,7 +4,9 @@ var fs = require('fs'),
     Tao = require('tao'),
     optimist = require('optimist'),
     argv = optimist.argv,
-    consoler = require('consoler');
+    consoler = require('consoler'),
+    exeq = require('exeq'),
+    sys = require('./package.json');
 
 exports.socket = function(port, html) {
     var socket = "<script src=\"http://localhost:" + (port + 1) + "/socket.io/socket.io.js\"></script><script>var socket = io.connect('http://localhost:" + (port + 1) + "');socket.on('updated', function (result) { window.location.reload(); });</script>";
@@ -69,6 +71,7 @@ exports.serve = function(dir, params, callback) {
 
 // mails(1)
 exports.cli = function() {
+
     var arguments = argv._,
         command = arguments[0],
         pkg = arguments[1],
@@ -115,6 +118,22 @@ exports.cli = function() {
             consoler.error('configs required');
             return false;
         }
+    } else if (command == 'init') {
+        var init = exeq([
+            'git clone ' + sys.repository.url + ' .',
+            'rm -rf .git',
+            'rm -rf bin',
+            'rm index.js package.json README.md README.en.md LICENSE',
+            'cp ./package.sample.json ./package.json',
+            'rm package.sample.json',
+            'cp ./README.sample.md ./README.md',
+            'rm README.sample.md',
+            'npm install'
+        ]);
+        init.on('done',function(count){
+            consoler.success('another mails theme created, enjoy!');
+        });
+        init.run();
     } else {
         return false;
     }
