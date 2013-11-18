@@ -1,11 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     swig = require('swig'),
-    juice = require('juice').juiceContent,
-    optimist = require('optimist'),
-    argv = optimist.argv,
-    Tao = require('tao'),
-    consoler = require('consoler');
+    juice = require('juice').juiceContent;
 
 // engines map
 exports._render = function(params, callback) {
@@ -83,103 +79,3 @@ exports.render = function(tpl, params, callback) {
         }
     }
 };
-
-exports.output = function(file, html, callback) {
-    var filename = file.substr(file.lastIndexOf('/') + 1, file.lastIndexOf('.') - file.lastIndexOf('/') - 1) + '.dest.html',
-        filedest = path.resolve(file, '../', filename);
-    console.log(filedest);
-    fs.writeFile(filedest, html, function(err) {
-        callback(err, filedest);
-    });
-};
-
-exports.watcher = function(dir, params) {
-    var port = params.port ? params.port : 3001;
-    var server = new Tao({
-        dir: dir
-    });
-    server.watch(function(file, event, stat, io) {
-        if (params.engine && event !== 'removed') {
-            if (file.indexOf('dest') === -1) {
-                exports._render({
-                    template: file,
-                    data: params.data,
-                    engine: {
-                        name: params.data.engine,
-                        _engine: params.engine
-                    }
-                }, function(err, html) {
-                    if (!err) {
-                        console.log(html);
-                        // compile and emit
-                        var socket = "<script src=\"http://localhost:" + (port + 1) + "/socket.io/socket.io.js\"></script><script>var socket = io.connect('http://localhost:" + (port + 1) + "');socket.on('rendered', function (data) {alert(data);});</script>";
-                        exports.output(file, html + socket, function(err, dest) {
-                            if (!err) {
-                                io.sockets.on('connection', function(socket) {
-                                    socket.emit('rendered', dest);
-                                });
-                            } else {
-                                consoler.error(err);
-                            }
-                        });
-                    } else {
-                        consoler.error(err);
-                    }
-                });
-            }
-        }
-    });
-    server.run(port);
-    return server;
-}
-
-// mails(1)
-exports.cli = function() {
-    var arguments = argv._,
-        command = arguments[0],
-        data = arguments[1],
-        dir = process.cwd(),
-        self = this;
-
-    if (command == 'watch') {
-        if (data) {
-            fs.readFile(path.resolve(dir, data.toString()), function(err, file) {
-                if (!err) {
-                    try {
-                        var data = JSON.parse(file);
-                        if (data.engine) {
-                            try {
-                                var engine = require(data.engine),
-                                    port = 3001;
-                                self.watcher = exports.watcher(dir, {
-                                    port: port,
-                                    engine: engine,
-                                    data: data
-                                });
-                                consoler.success('Mails is watching: http://localhost:' + port);
-                            } catch (err) {
-                                consoler.error('view engine required');
-                                consoler.error(err);
-                                return false;
-                            }
-                        } else {
-                            consoler.error('view engine required');
-                            return false;
-                        }
-                    } catch (err) {
-                        consoler.error('configs format must be json');
-                        return false;
-                    }
-                } else {
-                    consoler.log('404', 'configs not found');
-                    return false;
-                }
-            })
-        } else {
-            consoler.error('configs required');
-            return false;
-        }
-    } else {
-        return false;
-    }
-}
