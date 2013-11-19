@@ -1,5 +1,5 @@
 var nodemailer = require("nodemailer"),
-    render = require('./render');
+    render = require('./render').render;
 
 exports.mail = function(params, callback) {
     // smtp config

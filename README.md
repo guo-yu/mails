@@ -42,6 +42,8 @@ mails.send('basic', {
     from: 'xxx <xxx@qq.com>',
     to: 'abc@qq.com',
     subject: 'hi,abc',
+    name: 'mySite',
+    banner: 'http://mysite.com/banner.jpg',
     host: 'smtp.qq.com',
     port: 25,
     use_authentication: true,
