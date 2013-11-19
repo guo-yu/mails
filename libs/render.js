@@ -45,7 +45,7 @@ exports.render = function(tpl, params, callback) {
             name: tpl.indexOf('/') > -1 ? tpl.substr(0, tpl.indexOf('/')) : tpl,
             file: tpl.indexOf('/') > -1 ? tpl.substr(tpl.indexOf('/') + 1) : null
         };
-        var moduleDir = path.resolve(__dirname, '../', template.name);
+        var moduleDir = path.resolve(__dirname, '../../', template.name);
         if (fs.existsSync(moduleDir)) {
             // themes as local modules
             try {
