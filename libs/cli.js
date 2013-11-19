@@ -1,20 +1,18 @@
 var fs = require('fs'),
     path = require('path'),
-    mails = require('./index'),
+    render = require('./render'),
     Tao = require('tao'),
     optimist = require('optimist'),
     argv = optimist.argv,
     consoler = require('consoler'),
     exeq = require('exeq'),
-    sys = require('./package.json');
+    sys = require('../package.json');
 
-exports.socket = function(port, html) {
-    var socket = "<script src=\"http://localhost:" + (port + 1) + "/socket.io/socket.io.js\"></script><script>var socket = io.connect('http://localhost:" + (port + 1) + "');socket.on('updated', function (result) { window.location.reload(); });</script>";
-    return html + socket;
-}
+var socketclient = function(port, html) {
+    return html + "<script src=\"http://localhost:" + (port + 1) + "/socket.io/socket.io.js\"></script><script>var socket = io.connect('http://localhost:" + (port + 1) + "');socket.on('updated', function (result) { window.location.reload(); });</script>";
+};
 
 exports.serve = function(dir, params, callback) {
-
     // 初始化服务
     var server = new Tao({
         dir: dir,
@@ -35,7 +33,7 @@ exports.serve = function(dir, params, callback) {
         fs.exists(path.join(dir, file), function(exist) {
             if (exist) {
                 if (afterfix !== 'json') {
-                    mails._render({
+                    render._render({
                         template: path.join(dir, file),
                         data: JSON.parse(fs.readFileSync(params.pkg)),
                         engine: {
@@ -44,7 +42,7 @@ exports.serve = function(dir, params, callback) {
                         }
                     }, function(err, html) {
                         if (!err) {
-                            res.end(exports.socket(server.configs.port, html));
+                            res.end(socketclient(server.configs.port, html));
                         } else {
                             res.end('render error: ' + err.toString());
                         }
@@ -68,7 +66,7 @@ exports.serve = function(dir, params, callback) {
     });
     server.run();
     return server;
-}
+};
 
 // mails(1)
 exports.cli = function() {
@@ -138,4 +136,4 @@ exports.cli = function() {
     } else {
         return false;
     }
-}
+};

@@ -13,7 +13,7 @@ $ npm install mails
 
 mails 包括三个部分：
 
-- 一个邮件模板加载器  
+- 一个邮件模板加载器和发送工具（基于 Nodemailer 的 SMTP 服务）  
 - 一个支持实时编辑（live reload）的邮件模板设计工具（CLI）  
 - 一个快速生成邮件主题项目文件的脚手架工具（CLI）  
 
@@ -24,8 +24,8 @@ mails 包括三个部分：
 ````javascript
 var mails = require('mails'); // 引用 mails
 
-// 使用 basic 别名加载邮件模板，并填入对应的变量:
-mail.render('basic', {
+// 使用 basic 别名渲染邮件模板，并填入对应的变量:
+mails.render('basic', {
     name: 'mySite',
     banner: 'http://mysite.com/banner.jpg'
 }, function(err,html){
@@ -36,6 +36,20 @@ mail.render('basic', {
         console.log(err);
     }
 });
+
+// 直接使用某个邮件模板渲染后发送邮件
+mails.send('basic', {
+    from: 'xxx <xxx@qq.com>',
+    to: 'abc@qq.com',
+    subject: 'hi,abc',
+    host: 'smtp.qq.com',
+    port: 25,
+    use_authentication: true,
+    auth: {
+        user: "xxx@qq.com",
+        pass: 'yourpassword'
+    }
+}, function(err, response) { ...... });
 ````
 ### 内建邮件主题
 mails 内建邮件主题包括以下几种，各个邮件的变量列表请查阅 `templates/*.html` 各个模板文件：
