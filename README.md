@@ -92,13 +92,18 @@ $ mails init
 
 ````
 $ vi ./package.json
-$ { "view engine": "swig" }
+$ { "view engine": "swig" } // 比如使用swig作为模板引擎
 ````
 
 4. 使用 live reload 设计工具进行开发
 
 ````
-$ mails watch ./package.json 
+// ./package.json 也是存放模板变量的文件
+$ mails watch ./package.json [-p] [port] 
+````
+使用 mails 提供的 live reload 工具进行开发，程序会监听当前文件夹下文件的变动，包括样式表文件，模板文件和提供模板变量的 json 文件。打开相应的端口服务，指定相应文件的url即可访问，比如：
+````
+$ GET http://localhost:3001/message.html
 ````
 
 
@@ -106,6 +111,7 @@ $ mails watch ./package.json
 在使用 `npm publish` 发布到社区之前，确认以下几项：
 - 确保你的项目中 `package.json` 符合 NPM 社区规范
 - 确保 `package.json` 文件中有 `view engine` 字段并且符合邮件模板引擎
+- 建议在 readme.md 中附上一张模板最终渲染效果的截图
 
 ### API
 查看这个文件: `index.js`

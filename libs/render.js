@@ -1,6 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     swig = require('swig'),
+    glob = require("glob"),
     juice = require('juice').juiceContent;
 
 // environments
@@ -44,7 +45,7 @@ exports.render = function(tpl, params, callback) {
             name: tpl.indexOf('/') > -1 ? tpl.substr(0, tpl.indexOf('/')) : tpl,
             file: tpl.indexOf('/') > -1 ? tpl.substr(tpl.indexOf('/') + 1) : null
         };
-        var moduleDir = path.resolve(__dirname, '../../node_modules/', template.name);
+        var moduleDir = path.resolve(__dirname, '../', template.name);
         if (fs.existsSync(moduleDir)) {
             // themes as local modules
             try {
@@ -54,23 +55,28 @@ exports.render = function(tpl, params, callback) {
                         var engine = require(pkg['view engine']);
                         if (template.file) {
                             var file = path.join(moduleDir, template.file);
-                            if (fs.existsSync(file)) {
-                                exports._render({
-                                    template: file,
-                                    data: params,
-                                    engine: {
-                                        name: pkg['view engine'],
-                                        _engine: engine
+                            glob(file + '*', function(err, files) {
+                                if (!err) {
+                                    if (files && files.length > 0) {
+                                        exports._render({
+                                            template: files[0],
+                                            data: params,
+                                            engine: {
+                                                name: pkg['view engine'],
+                                                _engine: engine
+                                            }
+                                        }, callback);
+                                    } else {
+                                        callback(new Error('selected file not found'));
                                     }
-                                }, callback);
-                            } else {
-                                callback(new Error('selected file not found'));
-                            }
+                                } else {
+                                    callback(err);
+                                }
+                            });
                         } else {
-                            callback(new Error('which template your want to create mail ?'));
+                            callback(new Error('which template your want to use ?'));
                         }
                     } catch (err) {
-                        console.log(err);
                         callback(new Error('view engine not found'));
                     }
                 } else {
