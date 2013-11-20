@@ -1,0 +1,61 @@
+{% if articles %}
+
+  <table class="row articles">
+    <tr>
+      <td class="wrapper">
+
+        {% for article in articles %}
+        <table class="twelve columns">
+          <tr>
+
+            <td class="three sub-columns">
+              <!-- Top Left sub-grid -->
+              {% if article.thumb %}
+              <img width="110" height="110" src="{{article.thumb}}">
+              {% else %}
+              <img width="110" height="110" src="http://placehold.it/110x110">
+              {% endif %}
+            </td>
+
+            <td class="nine sub-columns last">
+
+              <!-- Top Right sub-grid -->
+              <h5>{{article.title}} 
+                {% if article.note %}
+                <small>{{article.note}}</small>
+                {% endif %}
+              </h5>
+              {% if article.desc %}
+              <p>{{article.desc}}</p>
+              {% endif %}
+              
+              <!-- custom wrapped button -->
+              <table width="150">
+                <tr>
+                  <td>
+                    
+                    <a class="button" href="{{article.button.href}}">
+                      <table>
+                        <tr>
+                          <td>
+                            {{article.button.text}}
+                          </td>
+                        </tr>
+                      </table>
+                    </a>
+
+                  </td>
+                </tr>
+              </table>
+              
+            </td>
+            <td class="expander"></td>
+          </tr>
+        </table>
+        {% endfor %}
+
+      </td>
+    </tr>
+  </table>
+
+{% endif %}

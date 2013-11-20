@@ -1,0 +1,49 @@
+  {% if contact %}
+  <table class="row footer">
+    <tr>
+      <td class="wrapper">
+              
+        <table class="six columns">
+          <tr>
+            <td class="left-text-pad">
+
+              <h5>{{contact.link.header}}</h5>
+
+              {% for link,href in contact.link.list%}
+              <a class="tiny-button {{link}}" href="{{href}}">
+                <table>
+                  <tr>
+                    <td>
+                      {{link}}
+                    </td>
+                  </tr>
+                </table>
+              </a>
+
+              <br>
+              {% endfor %}
+
+            </td>
+            <td class="expander"></td>
+          </tr>
+        </table>
+
+      </td>
+      <td class="wrapper last">
+
+        <table class="six columns">
+          <tr>
+            <td class="last right-text-pad">
+              <h5>{{contact.info.header}}</h5>
+              {% for k,v in contact.info.list %}
+              <p>{{k}}: {{v}}</p>
+              {% endfor %}
+            </td>          
+            <td class="expander"></td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+  {% endif %}

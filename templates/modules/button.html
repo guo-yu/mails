@@ -1,0 +1,28 @@
+{% if button %}
+<table class="row">
+  <tr>
+    <td class="wrapper last">
+
+      <table class="three columns">
+        <tr>
+          <td>
+
+            <a class="button" href="{{button.href}}">
+              <table>
+                <tr>
+                  <td>
+                    {{button.text}}
+                  </td>
+                </tr>
+              </table>
+            </a>
+
+          </td>
+          <td class="expander"></td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+{% endif %}

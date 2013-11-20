@@ -1,0 +1,22 @@
+{% if callout %}
+<table class="row callout">
+  <tr>
+    <td class="wrapper last">
+
+      <table class="twelve columns">
+        <tr>
+          <td class="panel">
+            <p>{{callout.text}} 
+              {% if callout.link %}
+              <a href="{{callout.link.href}}">{{callout.link.text}}</a>
+              {% endif %}
+            </p>
+          </td>
+          <td class="expander"></td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+{% endif %}

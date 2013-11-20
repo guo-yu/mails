@@ -11,7 +11,20 @@
       <tr>
         <td class="center" align="center" valign="top">
           <center>
-            {% block content %}{% endblock %}
+
+            {% include "./modules/header.html" %}
+            <br>
+
+            <table class="container main-content">
+              <tr>
+                <td>
+                    <!-- content start -->
+                    {% block content %}{% endblock %}
+                    <!-- container end below -->
+                </td>
+              </tr>
+            </table>
+
           </center>
         </td>
       </tr>

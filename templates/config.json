@@ -5,6 +5,30 @@
         "name": "test",
         "desc": "test desc"
     },
+    "button": {
+        "href": "http://aba.com",
+        "text": "Click Me!"
+    },
+    "articles": [
+        {
+            "title": "test",
+            "desc": "突然地发现这两天公司@豌豆荚 内部邮件中给全员请饭请咖啡请小酒的越来越多了。后来才发现，原来为了严厉打击“离开桌位不锁屏”的同学，豌豆们们们们们发起了一个小小的恶作剧：用他的邮箱发一封邮件给all。显然……效果超赞，我最近“可以喝到”的咖啡快赶上一年的量了。",
+            "note": "here is a note",
+            "button": {
+                "href": "http://aba.com",
+                "text": "Click Me!"
+            }
+        },
+        {
+            "title": "test",
+            "desc": "突然地发现这两天公司@豌豆荚 内部邮件中给全员请饭请咖啡请小酒的越来越多了。后来才发现，原来为了严厉打击“离开桌位不锁屏”的同学，豌豆们们们们们发起了一个小小的恶作剧：用他的邮箱发一封邮件给all。显然……效果超赞，我最近“可以喝到”的咖啡快赶上一年的量了。",
+            "note": "here is a note",
+            "button": {
+                "href": "http://aba.com",
+                "text": "Click Me!"
+            }
+        }
+    ],
     "contact": {
         "link": {
             "header": "联系我们",

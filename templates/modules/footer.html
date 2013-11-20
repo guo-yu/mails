@@ -1,0 +1,28 @@
+{% if footer %}
+<table class="row">
+  <tr>
+    <td class="wrapper last">
+
+      <table class="twelve columns">
+        <tr>
+          <td align="center">
+            <center>
+              <p style="text-align:center;">
+                {% for key,value in footer %}
+                  {% if value.href %}
+                  <a href="{{value}}">{{key}}</a> 
+                  {% else %}
+                  <span>{{key}} {{value}}</span>
+                  {% endif %}
+                {% endfor %}
+              </p>
+            </center>
+          </td>
+          <td class="expander"></td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+{% endif %}

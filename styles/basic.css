@@ -91,3 +91,17 @@ table.columns .right-text-pad {
     padding-right: 10px !important;
   }
 }
+
+.articles h5 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.articles small {
+  font-weight: normal;
+}
+
+.articles p {
+  font-size: 12px;
+}
