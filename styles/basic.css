@@ -1,3 +1,7 @@
+.button td,.tiny-button td {
+  border: 0 !important;
+}
+
 .facebook table td {
   background: #3b5998;
   border-color: #2d4473;
@@ -44,12 +48,24 @@
   background: #efefef;
 }
 
+.header h2 {
+  font-size: 24px;
+}
+
+.main-content h3 {
+  font-size: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .footer .wrapper {
   background: #ebebeb;
 }
 
 .footer h5 {
   padding-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 table.columns .text-pad {

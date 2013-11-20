@@ -18,10 +18,14 @@
                 <table class="twelve columns">
                   <tr>
                     <td class="six sub-columns">
-                      <img src="http://placehold.it/200x50">
+                      {% if site.logo %}
+                      <img src="{{site.logo}}" title="{{site.name}}" alt="{{site.name}}">
+                      {% else %}
+                      <h2>{{site.name}}</h2>
+                      {% endif %}
                     </td>
                     <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
-                      <span class="template-label">BASIC</span>
+                      <span class="template-label">{{site.desc}}</span>
                     </td>
                         
                   </tr>
@@ -36,7 +40,7 @@
     </tr>
   </table> 
 
-  <table class="container">
+  <table class="container main-content">
     <tr>
       <td>
       
@@ -47,9 +51,8 @@
               <table class="twelve columns">
                 <tr>
                   <td>
-                    <h3>Hi, Susan Calvin</h3>
-        						<p class="lead">Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae.</p>
-        						<p>Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae. consequat vel lacus. Sed iaculis pulvinar ligula, ornare fringilla ante viverra et. In hac habitasse platea dictumst. Donec vel orci mi, eu congue justo. Integer eget odio est, eget malesuada lorem. Aenean sed tellus dui, vitae viverra risus. Nullam massa sapien, pulvinar eleifend fringilla id, convallis eget nisi. Mauris a sagittis dui. Pellentesque non lacinia mi. Fusce sit amet libero sit amet erat venenatis sollicitudin vitae vel eros. Cras nunc sapien, interdum sit amet porttitor ut, congue quis urna.</p>
+                    <h3>{{title}}</h3>
+        						<p class="lead">{{desc}}</p>
                   </td>
                   <td class="expander"></td>
                 </tr>
@@ -58,7 +61,8 @@
             </td>
           </tr>
         </table>
-      
+        
+        {% if callout %}
         <table class="row callout">
           <tr>
             <td class="wrapper last">
@@ -66,7 +70,11 @@
               <table class="twelve columns">
                 <tr>
                   <td class="panel">
-                    <p>Phasellus dictum sapien a neque luctus cursus. Pellentesque sem dolor, fringilla et pharetra vitae. <a href="#">Click it! »</a></p>
+                    <p>{{callout.text}} 
+                      {% if callout.link %}
+                      <a href="{{callout.link.href}}">{{callout.link.text}}</a>
+                      {% endif %}
+                    </p>
                   </td>
                   <td class="expander"></td>
                 </tr>
@@ -75,7 +83,9 @@
             </td>
           </tr>
         </table>
-      
+        {% endif %}
+        
+        {% if contact %}
         <table class="row footer">
           <tr>
             <td class="wrapper">
@@ -84,41 +94,21 @@
                 <tr>
                   <td class="left-text-pad">
 
-                    <h5>Connect With Us:</h5>
+                    <h5>{{contact.link.header}}</h5>
 
-                    <a class="tiny-button facebook" href="#">
+                    {% for link,href in contact.link.list%}
+                    <a class="tiny-button {{link}}" href="{{href}}">
                       <table>
                         <tr>
                           <td>
-                            Facebook
+                            {{link}}
                           </td>
                         </tr>
                       </table>
                     </a>
 
                     <br>
-
-                    <a class="tiny-button twitter" href="#">
-                      <table>
-                        <tr>
-                          <td>
-                            Twitter
-                          </td>
-                        </tr>
-                      </table>
-                    </a>
-
-                    <br>
-
-                    <a class="tiny-button google-plus" href="#">
-                      <table>
-                        <tr>
-                          <td>
-                            Google +
-                          </td>
-                        </tr>
-                      </table>
-                    </a>
+                    {% endfor %}
 
                   </td>
                   <td class="expander"></td>
@@ -131,9 +121,10 @@
               <table class="six columns">
                 <tr>
                   <td class="last right-text-pad">
-                    <h5>Contact Info:</h5>
-                    <p>Phone: 408.341.0600</p>
-                    <p>Email: <a href="mailto:hseldon@trantor.com">hseldon@trantor.com</a></p>
+                    <h5>{{contact.info.header}}</h5>
+                    {% for k,v in contact.info.list %}
+                    <p>{{k}}: {{v}}</p>
+                    {% endfor %}
                   </td>          
                   <td class="expander"></td>
                 </tr>
@@ -142,8 +133,9 @@
             </td>
           </tr>
         </table>
+        {% endif %}
       
-      
+        {% if footer %}
         <table class="row">
           <tr>
             <td class="wrapper last">
@@ -152,7 +144,15 @@
                 <tr>
                   <td align="center">
                     <center>
-                      <p style="text-align:center;"><a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">Unsubscribe</a></p>
+                      <p style="text-align:center;">
+                        {% for key,value in footer %}
+                          {% if value.href %}
+                          <a href="{{value}}">{{key}}</a> 
+                          {% else %}
+                          <span>{{key}} {{value}}</span>
+                          {% endif %}
+                        {% endfor %}
+                      </p>
                     </center>
                   </td>
                   <td class="expander"></td>
@@ -162,6 +162,7 @@
             </td>
           </tr>
         </table>
+        {% endif %}
       
       <!-- container end below -->
       </td>

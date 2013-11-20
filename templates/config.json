@@ -1,0 +1,27 @@
+{
+    "view engine": "swig",
+    "title": "中午吃完饭，狗熊，鳄鱼，跳跳蛇在墙角晒太阳，黄鼠狼爬上房顶朝下说：”看苍茫大地~”",
+    "site": {
+        "name": "test",
+        "desc": "test desc"
+    },
+    "contact": {
+        "link": {
+            "header": "联系我们",
+            "list": {
+                "facebook": "http://facebook.com/xxx",
+                "twitter": "http://twitter.com/xxx"
+            }
+        },
+        "info": {
+            "header": "更多联系方式",
+            "list": {
+                "phone": "128182812812",
+                "email": "abc@abc.com"
+            }
+        }
+    },
+    "footer": {
+        "copyright": "123"
+    }
+}
