@@ -1,6 +1,6 @@
 {
   "name": "mails",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "send beautiful emails made easy, with sexy templates built in.",
   "main": "index.js",
   "author": "turing",
