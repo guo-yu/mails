@@ -5,7 +5,7 @@ exports.mail = function(params, callback) {
     // smtp config
     var smtpTransport = nodemailer.createTransport("SMTP", params);
     // send mail
-    smtpTransport.sendMail({
+    return smtpTransport.sendMail({
         from: params.from,
         to: params.to,
         subject: params.subject,
@@ -18,11 +18,8 @@ exports.mail = function(params, callback) {
 
 exports.send = function(tpl, params, callback) {
     render(tpl, params, function(err, html){
-        if (!err) {
-            params.html = html;
-            exports.mail(params, callback);
-        } else {
-            callback(err);
-        }
+        if (err) return callback(err);
+        params.html = html;
+        exports.mail(params, callback);
     });
 };

@@ -21,7 +21,7 @@ exports._render = function(params, callback) {
 
 // check local theme file
 exports.check = function(file) {
-    if fs.existsSync(path.join(DIR, file + '.html')) return path.join(DIR, file + '.html');
+    if (fs.existsSync(path.join(DIR, file + '.html'))) return path.join(DIR, file + '.html');
     return false;
 };
 
@@ -30,7 +30,7 @@ exports.theme = function(file, data, callback, engine) {
     return exports._render({
         template: file,
         data: data,
-        engine: engine ? engine : { name: 'swig', _engine: swig }
+        engine: engine || { name: 'swig', _engine: swig }
     }, callback);
 };
 
