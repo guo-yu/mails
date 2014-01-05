@@ -44,15 +44,20 @@ exports.render = function(template, params, callback) {
         if (!plugin) return callback(new Error('theme not found'));
         if (!plugin['view engine']) return callback(new Error('template engine required'));
         if (!file) return callback(new Error('template not found'));
-        // if we are going to load a file
+        // try to load view engine
         try {
             var engine = require(plugin['view engine']);
-            exports.theme(file.dir, params, callback, {
+        } catch (err) {
+            return callback(new Error('template engine required'));
+        }
+        // try to load template
+        try {
+            return exports.theme(file.exist ? file.dir : file.availables[0], params, callback, {
                 name: plugin['view engine'],
                 _engine: engine
             });
         } catch (err) {
-            return callback(new Error('template engine required'));
+            return callback(new Error('template not existed'));
         }
     });
 };
