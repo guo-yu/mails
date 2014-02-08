@@ -4,10 +4,9 @@ var Hub = require('pkghub'),
 // 根据指定模板引擎编译 html 
 exports.compile = function(params, callback) {
     var html;
+    var href = {};
     var engine = params.engine;
-    var href = {
-        url: 'file://' + params.template;
-    };
+    href.url = 'file://' + params.template;
     if (engine.name === 'jade') html = engine._engine.renderFile(params.template, params.data);
     if (engine.name === 'swig') html = engine._engine.compileFile(params.template)(params.data);
     if (!html) return callback(new Error('template engine is not supported'));
