@@ -1,6 +1,6 @@
 {
   "name": "mails",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "send beautiful emails made easy, with sexy templates built in.",
   "main": "index.js",
   "author": "turing",
@@ -22,13 +22,13 @@
     "url": "https://github.com/turingou/mails/issues"
   },
   "dependencies": {
-    "juice": "*",
-    "nodemailer": "*",
     "swig": "*",
+    "juice": "*",
+    "tao": "*",
+    "exeq": "*",
+    "pkghub": "*",
     "optimist": "*",
     "consoler": "*",
-    "pluse": "*",
-    "tao": "*",
-    "exeq": "*"
+    "nodemailer": "*"
   }
 }
