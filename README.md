@@ -1,8 +1,10 @@
 ## ![logo](http://ww2.sinaimg.cn/large/61ff0de3gw1eajmy0wdikj2014014wea.jpg) mails ![npm](https://badge.fury.io/js/mails.png)
 
-使用 mails，让发送邮件变得更简单与优雅，mails 志在解决设计邮件模板时代码复用率低，终端兼容情况不佳等问题。
+mails 使发送邮件变得更简单与优雅，提高模板复用率。
 
-你既可以使用 mails 内建的标准模板来发送邮件，也可以快速发布自己的邮件主题。mails 内建的标准邮件模板由 [ink](http://zurb.com/ink) 改造而来，二次开发友好，并且对各个终端的兼容表现优秀，稍作修改，亦可以适配智能手机等小屏幕终端。
+使用 mails 内建的标准模板 `mails-default` 来发送邮件，或者快速发布自己的邮件主题，mails 推荐您把邮件主题发布到 NPM
+
+mails 内建的标准邮件模板由 [ink](http://zurb.com/ink) 改造而来，对二次开发表现友好，也对各个终端的兼容表现优秀。稍作修改，亦可以适配智能手机等小屏幕终端。
 
 ### 如何安装
 ````
@@ -17,33 +19,34 @@ mails 包括三个部分：
 - 一个支持实时编辑（live reload）的邮件模板设计工具（CLI）  
 - 一个快速生成邮件主题项目文件的脚手架工具（CLI）  
 
-如果你是邮件主题开发者，希望分享自己的主题，或者将他们发布到 NPM，你可能会想要使用到第二个与第三个工具；如果你只是使用 mails 发送邮件的程序员，并不需要了解后两者如何运作，只需了解API的使用方法即可：
+如果你是邮件主题开发者，希望分享自己的主题，或者将他们发布到 NPM，你可能会想要使用到第二个与第三个工具；
+如果你只是使用 mails 发送邮件的程序员，并不需要了解后两者如何运作，只需了解API的使用方法即可：
 
 ### 范例代码
 最快上手使用 mails，我们来看一段渲染邮件的代码：
 ````javascript
 var mails = require('mails'); // 引用 mails
 
-// 使用 basic 别名渲染邮件模板，并填入对应的变量:
-mails.render('basic', {
-    name: 'mySite',
+// 使用 mails-default/basic 别名渲染邮件模板，并填入对应的变量:
+mails.render('mails-default/basic', {
+    name: 'The First Email To You',
     banner: 'http://mysite.com/banner.jpg'
 }, function(err,html){
     // 得到最终的邮件 html 代码
-    if (!err) {
-        console.log(html);
-    } else {
-        console.log(err);
-    }
+    if (err) return console.log(err)
+    console.log(html);
 });
 
-// 直接使用某个邮件模板渲染后发送邮件
-mails.send('basic', {
-    from: 'xxx <xxx@qq.com>',
-    to: 'abc@qq.com',
-    subject: 'hi,abc',
+// 如果不需要使用渲染后的片段做其他用途，
+// mails 推荐您直接使用 mails.send 发送邮件。
+mails.send('mails-default/basic', {
+    from: 'xxx <xxx@qq.com>', // 来自您的邮箱
+    to: 'abc@qq.com', // 接受者邮箱
+    subject: 'hi,abc', // 邮件标题
+    // 用做渲染的模板变量
     name: 'mySite',
     banner: 'http://mysite.com/banner.jpg',
+    // 用做发送的 smtp 配置
     host: 'smtp.qq.com',
     port: 25,
     use_authentication: true,
@@ -53,17 +56,9 @@ mails.send('basic', {
     }
 }, function(err, response) { ...... });
 ````
-### 内建邮件主题
-mails 内建邮件主题包括以下几种，各个邮件的变量列表请查阅 `templates/*.html` 各个模板文件：
-
-- basic
-- hero
-- newsletter
-- sidebar
-- sidebar-hero
 
 ### 加载 NPM 模块作为主题
-你可以将 mails 提供的标准邮件主题进行简单的二次开发，然后发布到 npm 作为您的邮件主题，使他人获益。
+你可以将 mails 提供的标准邮件主题进行简单的二次开发，然后发布到 NPM 作为您的邮件主题，使他人获益。
 
 在这个例子中，我们使用 `mails-flat` 模块中的 `message` 主题进行邮件渲染：
 ````javascript
@@ -111,6 +106,7 @@ $ GET http://localhost:3001/message.html
 在使用 `npm publish` 发布到社区之前，确认以下几项：
 - 确保你的项目中 `package.json` 符合 NPM 社区规范
 - 确保 `package.json` 文件中有 `view engine` 字段并且符合邮件模板引擎
+- 确保填写了相应的依赖模块名
 - 建议在 readme.md 中附上一张模板最终渲染效果的截图
 
 ### API
