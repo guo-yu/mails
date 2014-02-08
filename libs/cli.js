@@ -4,24 +4,17 @@ var fs = require('fs'),
     consoler = require('consoler'),
     optimist = require('optimist'),
     argv = optimist.argv,
-    serve = require('./serve'),
-    sys = require('../package.json');
+    serve = require('./serve');
 
 var commands = {
     init: function(self, pkg, dir) {
         var init = exeq([
-            'git clone ' + sys.repository.url + ' .',
+            'git clone https://github.com/turingou/mails-scaffold.git .',
             'rm -rf .git',
-            'rm -rf bin',
-            'rm index.js cli.js package.json README.md README.en.md LICENSE',
-            'cp ./package.sample.json ./package.json',
-            'rm package.sample.json',
-            'cp ./README.sample.md ./README.md',
-            'rm README.sample.md',
             'npm install'
         ]);
         init.on('done', function(count) {
-            return consoler.success('another mails theme created, enjoy!');
+            return consoler.success('another mail theme created, enjoy!');
         });
         init.run();
     },

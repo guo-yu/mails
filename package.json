@@ -22,13 +22,13 @@
     "url": "https://github.com/turingou/mails/issues"
   },
   "dependencies": {
-    "swig": "*",
-    "juice": "*",
-    "tao": "*",
-    "exeq": "*",
-    "pkghub": "*",
+    "tao": "0.0.2",
+    "exeq": "~0.4.0",
+    "juice": "~0.4.0",
+    "pkghub": "~0.0.1",
     "optimist": "*",
     "consoler": "*",
-    "nodemailer": "*"
+    "mails-default": "*",
+    "nodemailer": "~0.5.7"
   }
 }

@@ -3,5 +3,5 @@ var render = require('./libs/render'),
 
 exports.send = mailer.send;
 exports.mail = mailer.mail;
-exports._render = render._render;
+exports.compile = render.compile;
 exports.render = render.render;

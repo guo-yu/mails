@@ -1,10 +1,9 @@
 var nodemailer = require("nodemailer"),
     render = require('./render').render;
 
+// 发送邮件
 exports.mail = function(params, callback) {
-    // smtp config
     var smtpTransport = nodemailer.createTransport("SMTP", params);
-    // send mail
     return smtpTransport.sendMail({
         from: params.from,
         to: params.to,
@@ -12,14 +11,15 @@ exports.mail = function(params, callback) {
         html: params.html
     }, function(error, response) {
         callback(error, response);
-        smtpTransport.close();
+        return smtpTransport.close();
     });
 };
 
+// 根据某个主题渲染并发送邮件
 exports.send = function(tpl, params, callback) {
-    render(tpl, params, function(err, html){
+    return render(tpl, params, function(err, html){
         if (err) return callback(err);
         params.html = html;
-        exports.mail(params, callback);
+        return exports.mail(params, callback);
     });
 };
