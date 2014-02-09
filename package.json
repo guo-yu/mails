@@ -29,6 +29,6 @@
     "consoler": "*",
     "mails-default": "*",
     "nodemailer": "~0.5.7",
-    "pkghub-render": "~0.0.2"
+    "pkghub-render": "*"
   }
 }
