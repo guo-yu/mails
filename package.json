@@ -1,6 +1,6 @@
 {
   "name": "mails",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "send beautiful emails made easy, with sexy templates built in.",
   "main": "index.js",
   "author": "turing",
@@ -25,10 +25,10 @@
     "tao": "0.0.2",
     "exeq": "~0.4.0",
     "juice": "~0.4.0",
-    "pkghub": "~0.0.2",
     "optimist": "*",
     "consoler": "*",
     "mails-default": "*",
-    "nodemailer": "~0.5.7"
+    "nodemailer": "~0.5.7",
+    "pkghub-render": "~0.0.2"
   }
 }
