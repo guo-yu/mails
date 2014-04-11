@@ -1,5 +1,5 @@
-var render = require('./libs/render'),
-    mailer = require('./libs/mail');
+var render = require('./libs/render');
+var mailer = require('./libs/mail');
 
 exports.send = mailer.send;
 exports.mail = mailer.mail;
