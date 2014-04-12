@@ -27,8 +27,8 @@ var commands = {
         var data = JSON.parse(file);
         if (!data['view engine']) return consoler.error('view engine required');
         try {
-          var engine = require(data['view engine']),
-            port = argv.p && !isNaN(parseInt(argv.p, 10)) ? parseInt(argv.p, 10) : 3001;
+          var engine = require(data['view engine']);
+          var port = argv.p && !isNaN(parseInt(argv.p, 10)) ? parseInt(argv.p, 10) : 3001;
           self.server = serve(dir, {
             port: port,
             engine: engine,
