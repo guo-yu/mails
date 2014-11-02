@@ -6,6 +6,8 @@ var optimist = require('optimist');
 var argv = optimist.argv;
 var serve = require('./serve');
 
+module.exports = cli;
+
 var commands = {
   init: function(self, pkg, dir) {
     var init = exeq([
@@ -48,11 +50,13 @@ var commands = {
   }
 }
 
-// mails(1)
-module.exports = function() {
+function cli() {
   var arguments = argv._;
   var command = arguments[0];
-  if (!command) return false;
-  if (!commands[command]) return false;
+  if (!command)
+    return false;
+  if (!commands[command])
+    return false;
+
   return commands[command](this, arguments[1], process.cwd());
-};
+}

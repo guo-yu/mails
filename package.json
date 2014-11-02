@@ -1,11 +1,11 @@
 {
   "name": "mails",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "send beautiful emails made easy, with sexy templates built in.",
   "main": "index.js",
   "author": "turing",
   "license": "MIT",
-  "bin": "./bin/cli",
+  "bin": "bin/cli",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +29,6 @@
     "consoler": "*",
     "mails-default": "*",
     "nodemailer": "~0.5.7",
-    "pkghub-render": "*"
+    "pkghub-render": "0.1.0"
   }
 }
