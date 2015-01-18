@@ -1,74 +1,71 @@
 ## ![logo](http://ww2.sinaimg.cn/large/61ff0de3gw1eajmy0wdikj2014014wea.jpg) mails ![npm](https://badge.fury.io/js/mails.png)
 
-send beautiful emails made easy, with responsive templates built in.
+Send beautiful emails made easy, with responsive templates built in.
 
-mails supports [ink](http://zurb.com/ink) responsive email template now!
+Mails supports [ink](http://zurb.com/ink) responsive email template now!
 
 ### Installation
-````
+```bash
 $ npm install mails
-````
+```
 
 ### Example
-````javascript
+```js
 var mails = require('mails');
 
-// use built in templates
+// Use built in templates
 mail.render('basic', {
-    name: 'mySite',
-    banner: 'http://mysite.com/banner.jpg'
+  name: 'mySite',
+  banner: 'http://mysite.com/banner.jpg'
 }, function(err,html){
-    if (!err) {
-        console.log(html);
-    } else {
-        console.log(err);
-    }
+  if (!err) {
+    console.log(html);
+  } else {
+    console.log(err);
+  }
 });
-````
+```
 ### Built-in themes
-mails supports several kinds of themes, they are:
+Mails supports several kinds of themes, they are:
 
 - ink themes:
-    - basic
-    - hero
-    - newsletter
-    - sidebar
-    - sidebar-hero
+  - basic
+  - hero
+  - newsletter
+  - sidebar
+  - sidebar-hero
 - mails theme:
-    - one
+  - one
 
 #### built-in theme useage:
-````javascript
+```js
 var mails = require('mails');
 
 mails.render('basic', {
-    name: 'mySite',
-    banner: 'http://mysite.com/banner.jpg'
+  name: 'mySite',
+  banner: 'http://mysite.com/banner.jpg'
 }, function(err, html){
-    // do sth.
+  // do sth.
 });
-````
+```
 #### built-in theme variables:
-take a look:
+Take a look:
 (screenshots coming soon...)
 
 ### Templates as NPM modules
-you can also push templates as NPM modules, like this:
-````javascript
+You can also push templates as NPM modules, like this:
+```js
 var mails = require('mails');
 
-// using templates named `single` under module `mails-mailmao`
+// Using templates named `single` under module `mails-mailmao`
 mails.render('mails-mailmao/single', {
     name: 'mySite',
     banner: 'http://mysite.com/banner.jpg'
 }, function(err, html){
     // do sth.
 });
-````
+```
 please feel free to publish your templates to NPM.
-
-### API
-check this file: `index.js`
 
 ### Contributing
 - Fork this repo
@@ -80,7 +77,7 @@ check this file: `index.js`
 - Open a pull request, and enjoy <3
 
 ### MIT license
-Copyright (c) 2013 turing
+Copyright (c) 2013 turing &lt;o.u.turing@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +96,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
 
 ---
 ![docor](https://cdn1.iconfinder.com/data/icons/windows8_icons_iconpharm/26/doctor.png)
