@@ -4,11 +4,7 @@ var juice = require('juice').juiceContent;
 module.exports = renderer;
 
 /**
- * [根据给定的主题名称或者文件名称渲染邮件]
- * @param  {String}   template [description]
- * @param  {Object}   data     [description]
- * @param  {Function} callback [description]
- * @return {[type]}            [description]
+ * [根据给定的主题名称或者文件名称渲染邮件]        
  * @example
  *   exports.render('mails-flat/message', {...}, callback);
  */

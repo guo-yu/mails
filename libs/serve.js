@@ -1,17 +1,11 @@
-var fs     = require('fs');
-var Tao    = require('tao');
-var path   = require('path');
+var fs = require('fs');
+var Tao = require('tao');
+var path = require('path');
 var render = require('./render');
 
 module.exports = serve;
 
-/**
- * [开发 mails 主题的辅助工具, 监听本地文件变动，并实时刷新页面]
- * @param  {[String|Path]}   dir      [description]
- * @param  {[type]}   params   [description]
- * @param  {Function} callback [description]
- * @return {[type]}            [description]
- */
+// 开发 mails 主题的辅助工具, 监听本地文件变动，并实时刷新页面
 function serve(dir, params, callback) {
   var server = new Tao({
     dir: dir,
@@ -21,9 +15,9 @@ function serve(dir, params, callback) {
 
   // 直接访问时渲染页面
   server.use(function(req, res, next) {
-    if (req.url === '/') 
+    if (req.url === '/')
       return res.end('ok');
-    
+
     return next();
   });
 
@@ -32,10 +26,10 @@ function serve(dir, params, callback) {
     var afterfix = file.substr(file.lastIndexOf('.') + 1);
 
     fs.exists(path.join(dir, file), function(exist) {
-      if (!exist) 
+      if (!exist)
         return res.end('404');
 
-      if (afterfix === 'json') 
+      if (afterfix === 'json')
         return res.end(fs.readFileSync(path.join(dir, file)));
 
       render._render({
@@ -46,7 +40,7 @@ function serve(dir, params, callback) {
           _engine: params.engine
         }
       }, function(err, html) {
-        if (err) 
+        if (err)
           return res.end('render error: ' + err.toString());
 
         res.end(socketclient(server.configs.port, html));
@@ -66,8 +60,8 @@ function serve(dir, params, callback) {
   server.run();
 
   return server;
-};
+}
 
 function socketclient(port, html) {
   return html + "<script src=\"http://localhost:" + (port + 1) + "/socket.io/socket.io.js\"></script><script>var socket = io.connect('http://localhost:" + (port + 1) + "');socket.on('updated', function (result) { window.location.reload(); });</script>";
-};
+}

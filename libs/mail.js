@@ -4,12 +4,6 @@ var render = require('./render').render;
 exports.mail = mail;
 exports.send = send;
 
-/**
- * [Send Mails]
- * @param  {[type]}   params   [description]
- * @param  {Function} callback [description]
- * @return {[type]}            [description]
- */
 function mail(params, callback) {
   var smtpTransport = nodemailer.createTransport("SMTP", params);
   return smtpTransport.sendMail({
@@ -23,13 +17,7 @@ function mail(params, callback) {
   });
 }
 
-/**
- * [根据某个主题渲染并发送邮件]
- * @param  {[type]}   tpl      [description]
- * @param  {[type]}   params   [description]
- * @param  {Function} callback [description]
- * @return {[type]}            [description]
- */
+// 根据某个主题渲染并发送邮件
 function send(tpl, params, callback) {
   return render(tpl, params, function(err, html) {
     if (err) return callback(err);

@@ -10,33 +10,48 @@ module.exports = cli;
 
 var commands = {
   init: function(self, pkg, dir) {
-    var init = exeq([
+    var commands = [
       'git clone https://github.com/turingou/mails-scaffold.git .',
       'rm -rf .git',
       'npm install'
-    ]);
-    init.on('done', function(count) {
-      return consoler.success('another mail theme created, enjoy!');
-    });
-    init.run();
+    ];
+
+    exeq(commands)
+      .on('done', done);
+      .run();
+
+    function done(count) {
+      consoler.success('another mail theme created, enjoy!');
+    }
   },
   watch: function(self, pkg, dir) {
-    if (!pkg) return consoler.error('configs required');
+    if (!pkg) 
+      return consoler.error('configs required');
+
     pkg = pkg.toString();
-    fs.readFile(path.resolve(dir, pkg), function(err, file) {
-      if (err) return consoler.log('404', 'configs not found');
+
+    fs.readFile(path.resolve(dir, pkg), watch);
+
+    function watch(err, file) {
+      if (err) 
+        return consoler.log('404', 'configs not found');
+
       try {
         var data = JSON.parse(file);
-        if (!data['view engine']) return consoler.error('view engine required');
+        if (!data['view engine']) 
+          return consoler.error('view engine required');
+
         try {
           var engine = require(data['view engine']);
           var port = argv.p && !isNaN(parseInt(argv.p, 10)) ? parseInt(argv.p, 10) : 3001;
+
           self.server = serve(dir, {
             port: port,
             engine: engine,
             data: data,
             pkg: path.resolve(dir, pkg)
           });
+          
           return consoler.success('Mails is watching: http://localhost:' + port);
         } catch (err) {
           consoler.error('view engine required');
@@ -46,7 +61,7 @@ var commands = {
       } catch (err) {
         return consoler.error('configs format must be json');
       }
-    });
+    }
   }
 }
 
