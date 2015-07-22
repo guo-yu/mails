@@ -1,14 +1,14 @@
 ## ![logo](http://ww2.sinaimg.cn/large/61ff0de3gw1eajmy0wdikj2014014wea.jpg) mails ![npm](https://badge.fury.io/js/mails.png)
 
-mails 使发送邮件变得更简单与优雅，提高模板复用率。
+Mails 使发送邮件变得更简单与优雅，提高模板复用率。
 
-使用 mails 内建的标准模板 `mails-default` 来发送邮件，或者快速发布自己的邮件主题，mails 推荐您把邮件主题发布到 NPM
+使用 Mails 内建的标准模板 `mails-default` 来发送邮件，或者快速发布自己的邮件主题，Mails 推荐您把邮件主题发布到 NPM
 
-mails 内建的标准邮件模板由 [ink](http://zurb.com/ink) 改造而来，对二次开发表现友好，也对各个终端的兼容表现优秀。稍作修改，亦可以适配智能手机等小屏幕终端。
+Mails 内建的标准邮件模板由 [ink](http://zurb.com/ink) 改造而来，对二次开发表现友好，也对各个终端的兼容表现优秀。稍作修改，亦可以适配智能手机等小屏幕终端。
 
 ### 如何安装
 ````
-$ npm install mails
+$ npm install mails --save
 ````
 
 ### 快速指引

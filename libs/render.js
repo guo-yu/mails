@@ -1,20 +1,18 @@
-var render = require('pkghub-render');
-var juice = require('juice').juiceContent;
-
-module.exports = renderer;
+import juice from 'juice'
+import Promise from 'bluebird'
+import render from 'pkghub-render'
 
 /**
- * [根据给定的主题名称或者文件名称渲染邮件]        
+ * 根据给定的主题名称或者文件名称渲染邮件
  * @example
- *   exports.render('mails-flat/message', {...}, callback);
+ *   render('mails-flat/message', {...}).then(inlineHTML).catch(err)
  */
-function renderer(template, data, callback) {
-  var href = {};
-  return render(template, data, function(err, html, dest) {
-    if (err) 
-      return callback(err);
-    
-    href.url = 'file://' + dest;
-    return juice(html, href, callback);
-  });
+export default function(template, data) {
+  return render(template, data).then(html => {
+    try {
+      return Promise.resolve(juice(html))
+    } catch (err) {
+      return Promise.reject(err)
+    }
+  })
 }

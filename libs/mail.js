@@ -1,4 +1,3 @@
-var nodemailer = require("nodemailer");
 var render = require('./render').render;
 
 exports.mail = mail;
@@ -13,15 +12,6 @@ function mail(params, callback) {
     html: params.html
   }, function(error, response) {
     callback(error, response);
-    return smtpTransport.close();
-  });
-}
-
-// 根据某个主题渲染并发送邮件
-function send(tpl, params, callback) {
-  return render(tpl, params, function(err, html) {
-    if (err) return callback(err);
-    params.html = html;
-    return exports.mail(params, callback);
-  });
+    return smtpTransport.close()
+  })
 }

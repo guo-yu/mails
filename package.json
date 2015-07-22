@@ -1,11 +1,14 @@
 {
   "name": "mails",
-  "version": "0.1.0",
-  "description": "send beautiful emails made easy, with sexy templates built in.",
-  "main": "index.js",
-  "author": "turing",
+  "version": "0.2.0",
+  "description": "Send beautiful emails made easy with sexy built-in templates",
+  "main": "dist/mails.js",
+  "author": "turing <o.u.turing@Gmail.com>",
   "license": "MIT",
-  "bin": "bin/cli",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha tests/*.js --require tests/babelhook",
+    "build": "node_modules/.bin/babel libs --out-dir dist --source-maps --watch"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/turingou/mails.git"
@@ -19,13 +22,12 @@
     "url": "https://github.com/turingou/mails/issues"
   },
   "dependencies": {
-    "tao": "0.0.2",
-    "exeq": "~0.4.0",
-    "juice": "~0.4.0",
-    "optimist": "*",
-    "consoler": "*",
-    "mails-default": "*",
-    "nodemailer": "~0.5.7",
+    "bluebird": "^2.9.34",
+    "juice": "1.3.3",
+    "mails-default": "0.0.1",
     "pkghub-render": "0.1.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.3"
   }
 }
