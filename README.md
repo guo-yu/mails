@@ -28,7 +28,7 @@ Mails 包括三个部分：
 import mails from 'mails'
 
 // 使用 mails-default/basic 别名渲染邮件模板，并填入对应的变量:
-mails.render('mails-default/basic', {
+mails.render('basic', {
   name: 'The First Email To You',
   banner: 'http://mysite.com/banner.jpg'
 }).then(function(html){
@@ -46,7 +46,7 @@ mails.render('mails-default/basic', {
 import mails from 'mails'
 
 mails.render('mails-flat/message', {})
-  .then(function(html){
+  .then(function(html) {
     console.log(html)
   })
 ```

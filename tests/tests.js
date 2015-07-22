@@ -17,4 +17,14 @@ describe('Mails', () => {
       done(new Error('WTF'))
     }).catch(err => done())
   })
+
+  it('#render(): should render a third-party module template', done => {
+    render('mails-flat/message', {
+      footer: {
+        a: 'http://adbc.com'
+      }
+    }).then(html => {
+      done()
+    }).catch(done)
+  })
 })
