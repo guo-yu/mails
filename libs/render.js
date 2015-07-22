@@ -7,7 +7,10 @@ import render from 'pkghub-render'
  * @example
  *   render('mails-flat/message', {...}).then(inlineHTML).catch(err)
  */
-export default function(template, data) {
+export default function(template, data = {}) {
+  if (template.indexOf('/') === -1)
+    template = `mails-default/${template}`
+
   return render(template, data).then(html => {
     try {
       return Promise.resolve(juice(html))

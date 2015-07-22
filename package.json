@@ -28,6 +28,8 @@
     "pkghub-render": "0.1.0"
   },
   "devDependencies": {
-    "babel": "^5.8.3"
+    "babel": "^5.8.3",
+    "mocha": "^2.2.5",
+    "should": "^7.0.2"
   }
 }

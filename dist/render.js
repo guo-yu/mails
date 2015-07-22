@@ -24,7 +24,11 @@ var _pkghubRender = require('pkghub-render');
 
 var _pkghubRender2 = _interopRequireDefault(_pkghubRender);
 
-exports['default'] = function (template, data) {
+exports['default'] = function (template) {
+  var data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+  if (template.indexOf('/') === -1) template = 'mails-default/' + template;
+
   return (0, _pkghubRender2['default'])(template, data).then(function (html) {
     try {
       return _bluebird2['default'].resolve((0, _juice2['default'])(html));
